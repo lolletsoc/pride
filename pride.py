@@ -2,6 +2,7 @@ from flask import Flask, make_response
 from werkzeug.exceptions import BadRequest
 import conf
 from images import convert_image_with_vote
+from utils import has_valid_extension
 
 
 app = Flask(__name__)
@@ -18,6 +19,9 @@ def be_proud(request):
         return BadRequest('A vote must be provided')
 
     image = request.files['image']
+    if not has_valid_extension(image.filename):
+        return BadRequest('File type is not supported')
+
     converted_image = convert_image_with_vote(image, vote)
 
     response = make_response(converted_image)
