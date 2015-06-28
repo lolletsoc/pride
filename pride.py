@@ -8,7 +8,7 @@ from utils import has_valid_extension
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = conf.MAXIMUM_FILE_SIZE
 
-_FILE_NAME = "{filename}_{vote}"
+_FILE_NAME = "{vote}_{filename}"
 CONTENT_DISPOSITION = "attachment; filename={}".format(_FILE_NAME)
 
 
