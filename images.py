@@ -1,4 +1,5 @@
 from PIL import Image
+from StringIO import StringIO
 
 badge = Image.open("nyan_tr.gif")
 
@@ -15,7 +16,12 @@ def _convert_image_to_no(image):
 
     box = (profile_box[2] - badge_box[2], profile_box[3] - badge_box[3])
     profile.paste(badge, box, badge)
-    return profile
+
+    image_io = StringIO()
+    profile.save(image_io, 'JPEG')
+    image_io.seek(0)
+
+    return image_io
 
 def _convert_image_to_yes(image):
     raise NotImplementedError('Not a chance!')
