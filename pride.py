@@ -13,20 +13,19 @@ CONTENT_DISPOSITION = "attachment; filename={}".format(_FILE_NAME)
 
 @app.route('/pride', methods=['POST'])
 def be_proud(request):
-    if request.method == 'POST':
-        vote = request.form.get('vote')
-        if not vote:
-            return BadRequest('A vote must be provided')
+    vote = request.form.get('vote')
+    if not vote:
+        return BadRequest('A vote must be provided')
 
-        image = request.files['image']
-        converted_image = convert_image_with_vote(image, vote)
+    image = request.files['image']
+    converted_image = convert_image_with_vote(image, vote)
 
-        response = make_response(converted_image)
-        response.headers["Content-Disposition"] = CONTENT_DISPOSITION.format(
-            filename=converted_image.filename, vote=vote
-        )
+    response = make_response(converted_image)
+    response.headers["Content-Disposition"] = CONTENT_DISPOSITION.format(
+        filename=converted_image.filename, vote=vote
+    )
 
-        return response
+    return response
 
 if __name__ == "__main__":
     app.run()
